@@ -261,8 +261,8 @@ class Index{
     reload = () => {
         const buttonReload = document.getElementById("reload");
         buttonReload.addEventListener('click', (event) => {
-            window.location.reload();
             this.html();
+            window.location.reload();
         });
     }
 
