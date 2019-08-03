@@ -261,11 +261,15 @@ class Index{
     reload = () => {
         const buttonReload = document.getElementById("reload");
         buttonReload.addEventListener('click', (event) => {
-            this.html();
+            const macaco_louco = document.getElementById("macaco_louco");
+            const img = `
+                <br><img text-center" id="macaco_louco" height="300" width="280" src="./src/assets/img/macaco_louco.gif"/>
+            `
+            macaco_louco.innerHTML = img;
             window.location.reload();
         });
     }
-
+    
     navBar = () => {
         let dados = `
             <div class="navbar-dark fixed-top bg-dark">
@@ -330,7 +334,7 @@ class Index{
                                     <h3 class="pt-2 text-center" id="geracao">
                                         Sopa de palavras
                                     </h3>
-                                        <br><img text-center" height="300" width="280" src="./src/assets/img/macaco_louco.gif"/>
+                                        <br><img text-center" id="macaco_louco" height="300" width="280" src="./src/assets/img/macaco_louco.gif"/>
                                 </div>
                             </div>
                         </div>
