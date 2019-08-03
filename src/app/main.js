@@ -183,9 +183,9 @@ class Index{
     loop = () => {
         this.update();
         this.buttonExecutar();
+        this.reload();
         this.algoritmoGenetico();
 
-        console.log("EXECUTANDO");
         if (this.pause == false){
             return;
         } else {
@@ -201,7 +201,7 @@ class Index{
         if (this.populacao.concluido != true && this.frase != "Vazio" && this.executar == true){
             this.populacao.selecaoNatural();
             this.populacao.manegerGenes();
-            this.print();
+            this.sopaPalavras();
             this.infoExecucao();
         } else {
             this.executar = false;
@@ -222,6 +222,49 @@ class Index{
         this.body();
     }
 
+    pergandoInput = () => {
+        const adicionar = document.getElementById("adicionar");
+        const frase = document.getElementById("frase");
+        const qntPopulacao = document.getElementById("qnt_polulacao");
+
+        adicionar.addEventListener('click', (event) => {
+
+            if (frase.value != "" && qntPopulacao.value != ""){
+                if (frase.value.length <= 30 && qntPopulacao.value <= 10000){
+                    this.frase = frase.value;
+                    this.totalPopulacao = qntPopulacao.value;
+                    this.html(); // Renderiza toda a pag novamente.
+                } else {
+                    alert("O tamanho da frase não pode ultrapassar os 30 caracteres.");
+                    event.preventDefault();
+                }
+            } else {
+                alert("Campos vazios!!");
+                event.preventDefault();
+            }
+        });
+    }
+    
+    buttonExecutar = () => {
+        const buttonExecutar = document.getElementById("executar");
+        buttonExecutar.addEventListener('click', (event) => {
+
+            if (this.frase.length != 0 && this.totalPopulacao > 0){
+                this.executar = true;
+                this.populacao = new Populacao(this.totalPopulacao, this.taxaMutacao, this.frase);
+            } else {
+                event.preventDefault();
+            }
+        });
+    }
+
+    reload = () => {
+        const buttonReload = document.getElementById("reload");
+        buttonReload.addEventListener('click', (event) => {
+            window.location.reload();
+        });
+    }
+
     navBar = () => {
         let dados = `
             <div class="navbar-dark fixed-top bg-dark">
@@ -236,19 +279,30 @@ class Index{
         nome.innerHTML = dados;
     }
 
+    sopaPalavras = () =>{
+        const info = document.getElementById("sopa_palavras");
+        info.innerHTML = ` 
+        <div class="text-center" id="sopa_palavras">
+            <h3 class="pt-2 text-center" id="geracao">
+                Sopa de palavras
+            </h3>
+            <br>${ this.populacao.allGenes() }
+        </div>`
+    }
+    
     body = () => {
         let dados = `
         <main class="mt-5">
             <div class="col mt-5"></div>
             <div class="col mt-5"></div>
-            <div class="col mt-3"></div>
+            <div class="col mt-5"></div>
             <div class="card container mt-5">
                 <div class="row ">
                     <div class="col col-4 mt-2 mb-2">
                         <div class="card">
                             <div class="card-header">
                                 <div class="text-center">
-                                    <img class="rounded-circle" id="img" height="110" width="110" src="./src/assets/img/x.jpg"/>
+                                    <img class="rounded-circle" id="img" height="110" width="110" src="./src/assets/img/y.gif"/>
                                 </div>
                                 <div class="card mt-3 pl-2">
                                     <a class="pt-2" id="populacao" >Populacao: ${ this.totalPopulacao } </a>
@@ -262,21 +316,27 @@ class Index{
                                 <div class="mt-2">
                                     <button class="btn btn-success btn-sm btn-block my-2" id="executar" type="button">Executar</button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 mt-2">
-                        <div class="card">
-                            <div class="card-header" style="height: 391px">
-                                <div class="text-center mt-3" id="sopa_palavras">
-                                    
+                                <div class="mt-2">
+                                    <button class="btn btn-info btn-sm btn-block my-2" id="reload" type="button">Reload</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-4 mt-2">
                         <div class="card">
-                            <div class="card-header" style="height: 391px">
+                            <div class="card-header" style="height: 430px">
+                                <div class="text-center" id="sopa_palavras">
+                                    <h3 class="pt-2 text-center" id="geracao">
+                                        Sopa de palavras
+                                    </h3>
+                                        <br><img text-center" height="300" width="280" src="./src/assets/img/macaco_louco.gif"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-2">
+                        <div class="card">
+                            <div class="card-header" style="height: 430px">
                                 <div id="info">
                                     <h3 class="pt-2 text-center" id="geracao">
                                         Geracao <br>0
@@ -287,6 +347,7 @@ class Index{
                                     <h3 class="pt-2 text-center" id="geracao">
                                         Frase <br>Vazio
                                     </h3>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -315,46 +376,6 @@ class Index{
         `
         const geracao = document.getElementById("info");
         geracao.innerHTML = dados;
-    }
-
-    print = () =>{
-        const info = document.getElementById("sopa_palavras");
-        info.innerHTML = ` 
-        <div class="text-center pt-5" id="sopa_palavras">
-            ${ this.populacao.allGenes() }
-        </div>`
-    }
-    
-    pergandoInput = () => {
-        const adicionar = document.getElementById("adicionar");
-        const frase = document.getElementById("frase");
-        const qntPopulacao = document.getElementById("qnt_polulacao");
-
-        adicionar.addEventListener('click', (event) => {
-
-            if (frase.value != "" && qntPopulacao.value != ""){
-                if (frase.value.length <= 30 && qntPopulacao.value <= 10000){
-                    this.frase = frase.value;
-                    this.totalPopulacao = qntPopulacao.value;
-                    this.html(); // Renderiza toda a pag novamente.
-                } else {
-                    alert("O tamanho da frase não pode ultrapassar os 30 caracteres.");
-                    event.preventDefault();
-                }
-            } else {
-                alert("Campos vazios!!");
-                event.preventDefault();
-            }
-        });
-    }
-
-    buttonExecutar = () => {
-        const buttonExecutar = document.getElementById("executar");
-        buttonExecutar.addEventListener('click', (event) => {
-            this.executar = true;
-            this.populacao = new Populacao(this.totalPopulacao, this.taxaMutacao, this.frase);
-            console.log("CLICK");
-        });
     }
 }
 
