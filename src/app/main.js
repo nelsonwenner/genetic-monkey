@@ -261,12 +261,8 @@ class Index{
     reload = () => {
         const buttonReload = document.getElementById("reload");
         buttonReload.addEventListener('click', (event) => {
-            const macaco_louco = document.getElementById("macaco_louco");
-            const img = `
-                <br><img text-center" id="macaco_louco" height="300" width="280" src="./src/assets/img/macaco_louco.gif"/>
-            `
-            macaco_louco.innerHTML = img;
             window.location.reload();
+            new Index();
         });
     }
     
