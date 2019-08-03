@@ -163,7 +163,7 @@ class Index{
     constructor(){
         this.totalPopulacao = 0;
         this.taxaMutacao = 0.01;
-        this.frase = "Vazio";
+        this.frase = "Empty";
         this.largura = 0;
         this.altura = 0;
         this.frame = 0;
@@ -198,7 +198,7 @@ class Index{
     }
 
     algoritmoGenetico = () => {
-        if (this.populacao.concluido != true && this.frase != "Vazio" && this.executar == true){
+        if (this.populacao.concluido != true && this.frase != "Empty" && this.executar == true){
             this.populacao.selecaoNatural();
             this.populacao.manegerGenes();
             this.sopaPalavras();
@@ -206,6 +206,10 @@ class Index{
         } else {
             this.executar = false;
             this.pause = true;
+
+            if (this.populacao.melhorDNA == this.frase){
+                this.monkeyOk();
+            }
         }
     }
 
@@ -230,16 +234,16 @@ class Index{
         adicionar.addEventListener('click', (event) => {
 
             if (frase.value != "" && qntPopulacao.value != ""){
-                if (frase.value.length <= 30 && qntPopulacao.value <= 10000){
+                if (frase.value.length <= 30 && qntPopulacao.value <= 1000){
                     this.frase = frase.value;
                     this.totalPopulacao = qntPopulacao.value;
                     this.html(); // Renderiza toda a pag novamente.
                 } else {
-                    alert("O tamanho da frase não pode ultrapassar os 30 caracteres.");
+                    alert("The length of the sentence cannot exceed 30 characters.");
                     event.preventDefault();
                 }
             } else {
-                alert("Campos vazios!!");
+                alert("Empty fields!!");
                 event.preventDefault();
             }
         });
@@ -284,7 +288,7 @@ class Index{
         info.innerHTML = ` 
         <div class="text-center" id="sopa_palavras">
             <h3 class="pt-2 text-center" id="geracao">
-                Sopa de palavras
+                Word soup
             </h3>
             <br>${ this.populacao.allGenes() }
         </div>`
@@ -305,16 +309,16 @@ class Index{
                                     <img class="rounded-circle" id="img" height="110" width="110" src="./src/assets/img/y.gif"/>
                                 </div>
                                 <div class="card mt-3 pl-2">
-                                    <a class="pt-2" id="populacao" >Populacao: ${ this.totalPopulacao } </a>
-                                    <a class="pb-2" id="palavra" >Frase: ${ this.frase } </a>
+                                    <a class="pt-2" id="populacao" >Population: ${ this.totalPopulacao } </a>
+                                    <a class="pb-2" id="palavra" >Phrase: ${ this.frase } </a>
                                 </div>
                                 <div class="mt-2">
-                                    <input class="form-control" type="text" id="frase" placeholder="Digite a frase">
-                                    <input class="form-control mt-1" type="number" id="qnt_polulacao" placeholder="Quantidade populacao">
-                                    <button class="btn btn-dark btn-sm btn-block my-2" id="adicionar" type="button">Adicionar</button>
+                                    <input class="form-control" type="text" id="frase" placeholder="Enter the phrase">
+                                    <input class="form-control mt-1" type="number" id="qnt_polulacao" placeholder="Population quantity">
+                                    <button class="btn btn-dark btn-sm btn-block my-2" id="adicionar" type="button">Add</button>
                                 </div> 
                                 <div class="mt-2">
-                                    <button class="btn btn-success btn-sm btn-block my-2" id="executar" type="button">Executar</button>
+                                    <button class="btn btn-success btn-sm btn-block my-2" id="executar" type="button">Execute</button>
                                 </div>
                                 <div class="mt-2">
                                     <button class="btn btn-info btn-sm btn-block my-2" id="reload" type="button">Reload</button>
@@ -327,7 +331,7 @@ class Index{
                             <div class="card-header" style="height: 430px">
                                 <div class="text-center" id="sopa_palavras">
                                     <h3 class="pt-2 text-center" id="geracao">
-                                        Sopa de palavras
+                                        Word soup
                                     </h3>
                                         <br><img text-center" id="macaco_louco" height="300" width="280" src="./src/assets/img/macaco_louco.gif"/>
                                 </div>
@@ -339,14 +343,16 @@ class Index{
                             <div class="card-header" style="height: 430px">
                                 <div id="info">
                                     <h3 class="pt-2 text-center" id="geracao">
-                                        Geracao <br>0
+                                        Generation <br>0
                                     </h3>
                                     <h3 class="pt-2 text-center" id="geracao">
                                         Fitness <br>0
                                     </h3>
                                     <h3 class="pt-2 text-center" id="geracao">
-                                        Frase <br>Vazio
+                                        Phrase <br>Empty
                                     </h3>
+                                    <div class="text-center pt-5 pl-5" id="macaco_ok">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -363,18 +369,28 @@ class Index{
         let dados = `
             <div id="info">
                 <h3 class="pt-2 text-center" id="geracao">
-                    Geracao <br>${ this.populacao.geracao }
+                    Generation <br>${ this.populacao.geracao }
                 </h3>
                 <h3 class="pt-2 text-center" id="geracao">
                     Fitness <br>${ this.populacao.melhorfitness }
                 </h3>
                 <h3 class="pt-2 text-center" id="geracao">
-                    Frase <br>${ this.populacao.melhorDNA }
+                    Phrase <br>${ this.populacao.melhorDNA }
                 </h3>
+                <div class="text-center pt-5 pl-5" id="macaco_ok">
+                </div>
             </div>
         `
         const geracao = document.getElementById("info");
         geracao.innerHTML = dados;
+    }
+
+    monkeyOk = () => {
+        let dados = `
+            <img height="130" width="150" src="./src/assets/img/macaco_legal.gif"/>
+        `
+        const macaco_ok = document.getElementById("macaco_ok");
+        macaco_ok.innerHTML = dados;
     }
 }
 
