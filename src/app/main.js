@@ -347,7 +347,6 @@ class Index{
                                     <h3 class="pt-2 text-center" id="geracao">
                                         Frase <br>Vazio
                                     </h3>
-                                    
                                 </div>
                             </div>
                         </div>
