@@ -1,0 +1,21 @@
+@font-face {
+    font-family: font04;
+    src: url("../../assets/fonts/font04.ttf");
+ }
+
+ #populacao {
+	font-family: font04;
+}
+
+#palavra {
+	font-family: font04;
+}
+
+#geracao {
+	font-family: font04;
+}
+
+body {
+	background: #4e5761;
+}
+

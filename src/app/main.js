@@ -108,7 +108,7 @@ class Populacao{
             let filho = parceiroA.crossover(parceiroB);
 
             filho.mutacao(this.taxaMutacao);
-    
+            
             this.populacao[i] = filho;
         }
         this.geracao += 1;
@@ -150,44 +150,43 @@ class Populacao{
         return Math.max(Math.min(valor, valorMaximo), valorMinimo);
     }
 
+    allGenes = () => {
+        let dados = "";
+        for (let i = this.populacao.length - 1; i >= this.populacao.length - 10; i--){
+            dados += `<h6 class="text-sm-center"> ${this.populacao[i].fenotipo()} </h6>`
+        }
+        return dados;
+    }
 }
 
 class Index{
-    constructor(totalPopulacao, taxaMutacao, frase){
-        this.totalPopulacao = totalPopulacao;
-        this.taxaMutacao = taxaMutacao;
-        this.frase = frase;
+    constructor(){
+        this.totalPopulacao = 0;
+        this.taxaMutacao = 0.01;
+        this.frase = "Vazio";
         this.largura = 0;
         this.altura = 0;
         this.frame = 0;
-        this.contexto = this.createCanvas();
         this.populacao = new Populacao(this.totalPopulacao, this.taxaMutacao, this.frase);
         this.pause = false;
+        this.executar = false;
+        this.info = 0;
         this.html();
-        this.init = this.start();
-
+        this.pergandoInput();
+        this.start();
     }   
 
     start = () => {
         this.loop();
     }
 
-    createCanvas = () => {
-        let canvas = document.createElement("canvas");
-        canvas.width = this.largura;
-        canvas.height = this.altura;
-        let contexto = canvas.getContext("2d");
-        document.body.appendChild(canvas);
-        return contexto;
-    }
-
     loop = () => {
         this.update();
-        //this.desenhar();
-        //this.html();
+        this.buttonExecutar();
         this.algoritmoGenetico();
 
-        if (this.pause){
+        console.log("EXECUTANDO");
+        if (this.pause == false){
             return;
         } else {
             window.requestAnimationFrame(this.loop);
@@ -198,43 +197,18 @@ class Index{
         this.frame++;
     }
 
-    desenhar = () => {
-        this.background();
-    }
-
-    background = () => {
-        this.contexto.fillStyle = "black";
-        this.contexto.fillRect(0, 0, this.largura, this.altura);
-    }
-
     algoritmoGenetico = () => {
-        if (this.populacao.concluido != true){
+        if (this.populacao.concluido != true && this.frase != "Vazio" && this.executar == true){
             this.populacao.selecaoNatural();
             this.populacao.manegerGenes();
-            this.info();
+            this.print();
+            this.infoExecucao();
         } else {
-            this.result();
+            this.executar = false;
             this.pause = true;
         }
     }
 
-    result = () => {
-        console.log("\n############### SUCESSO ################");
-        console.log("GERACAO: ", this.populacao.geracao);
-        console.log("MELHOR INDIVIDUO: ", this.populacao.melhorDNA);
-        console.log("MELHOR FITNESS: ", this.populacao.melhorfitness);
-        console.log("RESULTADO: ", this.populacao.melhorDNA);
-    }
-
-    info = () => {
-        let dados = `
-            <h2> GERAÇÃO: ${this.populacao.geracao} </h2>
-            <h2> EXECUTANDO: ${this.populacao.melhorDNA} </h2>
-        `   
-        const nome = document.getElementById("nome");
-        nome.innerHTML = dados;
-    }
-    
     div = (tag, id) => {
         const nome = document.createElement(tag);
         nome.id = id;
@@ -242,10 +216,146 @@ class Index{
     }
 
     html = () => {
-        this.div("div", "nome");
-        //this.container();
-        //this.info();
+        this.div("div", "navBar");
+        this.navBar();
+        this.div("div", "body");
+        this.body();
+    }
+
+    navBar = () => {
+        let dados = `
+            <div class="navbar-dark fixed-top bg-dark">
+                <nav class="navbar container navbar-expand-lg">
+                    <img class="circle" id="img" height="60" width="60" src="./src/assets/img/monkey-laptop.png"/>
+                    <div class="collapse navbar-collapse">
+                    </div>
+                </nav>
+            </div>
+        `
+        const nome = document.getElementById("navBar");
+        nome.innerHTML = dados;
+    }
+
+    body = () => {
+        let dados = `
+        <main class="mt-5">
+            <div class="col mt-5"></div>
+            <div class="col mt-5"></div>
+            <div class="col mt-3"></div>
+            <div class="card container mt-5">
+                <div class="row ">
+                    <div class="col col-4 mt-2 mb-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="text-center">
+                                    <img class="rounded-circle" id="img" height="110" width="110" src="./src/assets/img/x.jpg"/>
+                                </div>
+                                <div class="card mt-3 pl-2">
+                                    <a class="pt-2" id="populacao" >Populacao: ${ this.totalPopulacao } </a>
+                                    <a class="pb-2" id="palavra" >Frase: ${ this.frase } </a>
+                                </div>
+                                <div class="mt-2">
+                                    <input class="form-control" type="text" id="frase" placeholder="Digite a frase">
+                                    <input class="form-control mt-1" type="number" id="qnt_polulacao" placeholder="Quantidade populacao">
+                                    <button class="btn btn-dark btn-sm btn-block my-2" id="adicionar" type="button">Adicionar</button>
+                                </div> 
+                                <div class="mt-2">
+                                    <button class="btn btn-success btn-sm btn-block my-2" id="executar" type="button">Executar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-2">
+                        <div class="card">
+                            <div class="card-header" style="height: 391px">
+                                <div class="text-center mt-3" id="sopa_palavras">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-2">
+                        <div class="card">
+                            <div class="card-header" style="height: 391px">
+                                <div id="info">
+                                    <h3 class="pt-2 text-center" id="geracao">
+                                        Geracao <br>0
+                                    </h3>
+                                    <h3 class="pt-2 text-center" id="geracao">
+                                        Fitness <br>0
+                                    </h3>
+                                    <h3 class="pt-2 text-center" id="geracao">
+                                        Frase <br>Vazio
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	    </main>
+        `
+        const nome = document.getElementById("body");
+        nome.innerHTML = dados;
+    }
+
+    infoExecucao = () => {
+        let dados = `
+            <div id="info">
+                <h3 class="pt-2 text-center" id="geracao">
+                    Geracao <br>${ this.populacao.geracao }
+                </h3>
+                <h3 class="pt-2 text-center" id="geracao">
+                    Fitness <br>${ this.populacao.melhorfitness }
+                </h3>
+                <h3 class="pt-2 text-center" id="geracao">
+                    Frase <br>${ this.populacao.melhorDNA }
+                </h3>
+            </div>
+        `
+        const geracao = document.getElementById("info");
+        geracao.innerHTML = dados;
+    }
+
+    print = () =>{
+        const info = document.getElementById("sopa_palavras");
+        info.innerHTML = ` 
+        <div class="text-center pt-5" id="sopa_palavras">
+            ${ this.populacao.allGenes() }
+        </div>`
+    }
+    
+    pergandoInput = () => {
+        const adicionar = document.getElementById("adicionar");
+        const frase = document.getElementById("frase");
+        const qntPopulacao = document.getElementById("qnt_polulacao");
+
+        adicionar.addEventListener('click', (event) => {
+
+            if (frase.value != "" && qntPopulacao.value != ""){
+                if (frase.value.length <= 30 && qntPopulacao.value <= 10000){
+                    this.frase = frase.value;
+                    this.totalPopulacao = qntPopulacao.value;
+                    this.html(); // Renderiza toda a pag novamente.
+                } else {
+                    alert("O tamanho da frase não pode ultrapassar os 30 caracteres.");
+                    event.preventDefault();
+                }
+            } else {
+                alert("Campos vazios!!");
+                event.preventDefault();
+            }
+        });
+    }
+
+    buttonExecutar = () => {
+        const buttonExecutar = document.getElementById("executar");
+        buttonExecutar.addEventListener('click', (event) => {
+            this.executar = true;
+            this.populacao = new Populacao(this.totalPopulacao, this.taxaMutacao, this.frase);
+            console.log("CLICK");
+        });
     }
 }
 
-new Index(1000, 0.01, "nelson dias");
+new Index();
