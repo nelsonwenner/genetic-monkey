@@ -7,7 +7,7 @@ body = (lengthPopulation, phrase) => {
         <div class="col mt-5"></div>
         <div class="card container mt-5">
             <div class="row ">
-                <div class="col col-4 mt-2 mb-2">
+                <div class="col col-lg-4 col-sm-12 mt-2 mb-2">
                     <div class="card">
                         <div class="card-header">
                             <div class="text-center">
@@ -31,7 +31,7 @@ body = (lengthPopulation, phrase) => {
                         </div>
                     </div>
                 </div>
-                <div class="col-4 mt-2">
+                <div class="col col-lg-4 col-sm-12 mt-2">
                     <div class="card">
                         <div class="card-header" style="height: 430px">
                             <div class="text-center" id="soupWord">
@@ -43,7 +43,7 @@ body = (lengthPopulation, phrase) => {
                         </div>
                     </div>
                 </div>
-                <div class="col-4 mt-2">
+                <div class="col col-lg-4 col-sm-12 mt-2">
                     <div class="card">
                         <div class="card-header" style="height: 430px">
                             <div id="info">
