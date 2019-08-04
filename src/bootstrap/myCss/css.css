@@ -1,18 +1,11 @@
+
 @font-face {
-    font-family: font04;
-    src: url("../../assets/fonts/font04.ttf");
+    font-family: newFont;
+    src: url("../../assets/fonts/newFont.ttf");
  }
 
- #populacao {
-	font-family: font04;
-}
-
-#palavra {
-	font-family: font04;
-}
-
-#geracao {
-	font-family: font04;
+ #useNewFont {
+	font-family: newFont;
 }
 
 body {

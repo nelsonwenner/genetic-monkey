@@ -1,18 +1,17 @@
 
 class Index{
     constructor(){
-        this.totalPopulacao = 0;
-        this.taxaMutacao = 0.01;
-        this.frase = "Empty";
-        this.largura = 0;
-        this.altura = 0;
+        this.lengthPopulation = 0;
+        this.rateMutation = 0.01;
+        this.phrase = "Empty";
+        this.width = 0;
+        this.height = 0;
         this.frame = 0;
-        this.populacao = new Populacao(this.totalPopulacao, this.taxaMutacao, this.frase);
         this.pause = false;
-        this.executar = false;
-        this.info = 0;
+        this.buttonRunClicked = false;
+        this.population = new Population(this.lengthPopulation, this.rateMutation, this.phrase);
         this.html();
-        this.pergandoInput();
+        this.eventInputButtonAdd();
         this.start();
     }   
 
@@ -22,11 +21,11 @@ class Index{
 
     loop = () => {
         this.update();
-        this.buttonExecutar();
-        this.reload();
-        this.algoritmoGenetico();
-
-        if (this.pause == false){
+        this.eventButtonRun();
+        this.eventButtonReload();
+        this.runAlgorithmGenetic();
+       
+        if (this.pause == true){
             return;
         } else {
             window.requestAnimationFrame(this.loop);
@@ -37,46 +36,46 @@ class Index{
         this.frame++;
     }
 
-    algoritmoGenetico = () => {
-        if (this.populacao.concluido != true && this.frase != "Empty" && this.executar == true){
-            this.populacao.selecaoNatural();
-            this.populacao.manegerGenes();
-            sopaPalavras(this.populacao.allGenes());
-            infoExecucao(this.populacao.geracao, this.populacao.melhorfitness, this.populacao.melhorDNA);
+    runAlgorithmGenetic = () => {
+        if (this.population.completed != true && this.phrase != "Empty" && this.buttonRunClicked  == true){
+            this.population.selectNatural();
+            this.population.manegerGenes();
+            soupWords(this.population.allGenes());
+            informationRun(this.population.generation, this.population.bestFitness, this.population.bestDna);
         } else {
-            this.executar = false;
-            this.pause = true;
 
-            if (this.populacao.melhorDNA == this.frase){
-                monkeyOk();
+            this.buttonRunClicked  = false;
+            if (this.population.bestDna == this.phrase){
+                this.pause = true;
+                monkeyCool();
             }
         }
     }
 
     div = (tag, id) => {
-        const nome = document.createElement(tag);
-        nome.id = id;
-        document.body.appendChild(nome);
+        const name = document.createElement(tag);
+        name.id = id;
+        document.body.appendChild(name);
     }
 
     html = () => {
         this.div("div", "nav");
         nav();
         this.div("div", "body");
-        body(this.totalPopulacao, this.frase);
+        body(this.lengthPopulation, this.phrase);
     }
 
-    pergandoInput = () => {
-        const adicionar = document.getElementById("adicionar");
-        const frase = document.getElementById("frase");
-        const qntPopulacao = document.getElementById("qnt_polulacao");
+    eventInputButtonAdd = () => {
+        const add = document.getElementById("add");
+        const phrase = document.getElementById("phrase");
+        const lengthPopulation = document.getElementById("lengthPoputation");
 
-        adicionar.addEventListener('click', (event) => {
+        add.addEventListener('click', (event) => {
 
-            if (frase.value != "" && qntPopulacao.value != ""){
-                if (frase.value.length <= 30 && qntPopulacao.value <= 1000){
-                    this.frase = frase.value;
-                    this.totalPopulacao = qntPopulacao.value;
+            if (phrase.value != "" && lengthPopulation.value != ""){
+                if (phrase.value.length <= 30 && lengthPopulation.value <= 1000){
+                    this.phrase = phrase.value;
+                    this.lengthPopulation = lengthPopulation.value;
                     this.html(); // Renderiza toda a pag novamente.
                 } else {
                     alert("The length of the sentence cannot exceed 30 characters.");
@@ -89,20 +88,20 @@ class Index{
         });
     }
     
-    buttonExecutar = () => {
-        const buttonExecutar = document.getElementById("executar");
-        buttonExecutar.addEventListener('click', (event) => {
+    eventButtonRun = () => {
+        const eventButton = document.getElementById("run");
+        eventButton.addEventListener('click', (event) => {
 
-            if (this.frase.length != 0 && this.totalPopulacao > 0){
-                this.executar = true;
-                this.populacao = new Populacao(this.totalPopulacao, this.taxaMutacao, this.frase);
+            if (this.phrase.length != 0 && this.lengthPopulation > 0){
+                this.buttonRunClicked  = true;
+                this.population = new Population(this.lengthPopulation, this.rateMutation, this.phrase);
             } else {
                 event.preventDefault();
             }
         });
     }
 
-    reload = () => {
+    eventButtonReload = () => {
         const buttonReload = document.getElementById("reload");
         buttonReload.addEventListener('click', (event) => {
             window.location.reload();

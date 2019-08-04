@@ -1,66 +1,66 @@
 class Dna{
-    constructor(frase){
-        this.frase = frase;
-        this.genes = [];
+    constructor(phrase){
+        this.phrase = phrase;
         this.fitnes = 0;
-        this.gerarDna();
+        this.genes = [];
+        this.startDna();
     }
 
-    gerarDna = () => {
-        for (let i=0; i < this.frase.length; i++){
+    startDna = () => {
+        for (let i=0; i < this.phrase.length; i++){
             this.genes.push(this.newCaracter());
         }
     }
 
     newCaracter = () => {
-        return this.converterASCII(this.randomParaIntervalo(32, 128));
+        return this.convertASCII(this.randomForInterval(32, 128));
     }
 
     fitness = () => {
-        let pontos = 0;
-        for (let i=0; i < this.frase.length; i++){
-            if (this.genes[i] == this.frase[i]){
-                pontos++;
+        let score = 0;
+        for (let i=0; i < this.phrase.length; i++){
+            if (this.genes[i] == this.phrase[i]){
+                score++;
             }
         }
-        this.fitnes = this.calcFit(pontos, this.genes.length);
+        this.fitnes = this.calcFit(score, this.genes.length);
         return this.fitnes;
     }
 
-    calcFit = (pontos, tamanho) => {
-        return Math.pow((pontos / tamanho), 3);
+    calcFit = (scores, length) => {
+        return Math.pow((scores / length), 3);
     }
 
-    crossover = (objParceiro) => {
-        let filho = new Dna(this.frase);
-        let corte = this.randomParaIntervalo(0, this.genes.length);
+    crossover = (objPartner) => {
+        let child = new Dna(this.phrase);
+        let slice = this.randomForInterval(0, this.genes.length);
         for (let i=0; i < this.genes.length; i++){
-            if (i > corte){
-                filho.genes[i] = this.genes[i];
+            if (i > slice){
+                child.genes[i] = this.genes[i];
             } else {
-                filho.genes[i] = objParceiro.genes[i];
+                child.genes[i] = objPartner.genes[i];
             }
         }
-        return filho;
+        return child;
     }
     
     fenotipo = () => {
         return this.genes.join('');
     }
     
-    mutacao = (taxaMutacao) => {
+    mutation = (rateMutation) => {
         for (let i=0; i < this.genes.length; i++){
-            if (Math.random(1) < taxaMutacao){
+            if (Math.random(1) < rateMutation){
                 this.genes[i] = this.newCaracter();
             }
         }
     }
     
-    converterASCII = (valor) => {
-        return String.fromCharCode(valor);
+    convertASCII = (value) => {
+        return String.fromCharCode(value);
     }
 
-    randomParaIntervalo = (min, max) => {
+    randomForInterval = (min, max) => {
         return Math.floor(Math.random() * (max - min) + min);
     }
 
