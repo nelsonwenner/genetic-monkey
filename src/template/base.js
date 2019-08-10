@@ -2,7 +2,7 @@
 nav = () => {
     let dados = `
     <header class="bg-color">
-        <div class="my-container">
+        <div class="my-container-flex">
             <img class="circle logo" id="img" height="60" width="60" src="./src/assets/img/monkey-laptop.png"/>
         </div>
     </header>
