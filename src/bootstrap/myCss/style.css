@@ -1,0 +1,206 @@
+/* Config new font */
+@font-face {
+    font-family: newFont;
+    src: url("../../assets/fonts/newFont.ttf");
+ }
+
+ #useNewFont {
+	font-family: newFont;
+}
+
+/* Reset config padrão */
+body {
+    background: #4e5761;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Cores */
+.btn-dark {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+ }
+
+/* input */
+.input {
+    width: 339px;
+    padding: 5px 5px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* button */
+.buttonn {
+    padding: 5px 5px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border: 2px solid white;
+    width: 340px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+/* Macaco legal */
+.monkeyCool {
+    text-align: center;
+    margin-top: 62px;
+    margin-left: 57px;
+}
+
+/* Config container flex  */
+.my-container-flex {
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+/* Estilo do card */
+.card-style {
+    background: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+/* Config container flex com wrap */
+.container-flex-com-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+/* 0 > 1200 ele fica em formato coluna, itens um abaixo do outro caso a resolução seja menor que 1200px*/
+@media (max-width: 1200px) {
+    .container-flex-com-wrap {
+        flex-direction: column;
+        max-width: 450px; 
+        height: 1350px;
+    }
+    .my-container-flex {
+        width: 450px; 
+    }
+    .input {
+        width: 389px;
+    }
+    .buttonn {
+        width: 389px;
+    }
+    .monkeyCool {
+        margin-top: 83px;
+    }
+}
+
+/* Config card  */
+.card-item-flex {
+    flex: 1;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    text-align: center;
+    height: 415px;
+    font-size: 1.5em;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    background-clip: border-box;
+}
+
+/* Container responsivo */
+
+.my-container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 768px) {
+    .my-container {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .my-container {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .my-container {
+        width: 1170px;
+    }
+}
+
+/* Auxiliares */
+.margin-input {
+    padding-left: 10px;
+    padding-right: 10px; 
+}
+
+.margin-button {
+    padding-left: 10px;
+    padding-right: 10px; 
+}
+
+.fontSizeLow {
+    text-align: start;
+    font-size: 16px;
+    padding-left: 5px;
+}
+
+.bg-color {
+    background: #343a40;
+}
+
+.info {
+    margin-top: 12px;
+    text-align: center;
+}
+
+.wordSoup {
+    margin-top: 12px;
+    text-align: center;
+}
+
+.perfil-monkey {
+    margin-top: 8px;
+}
+
+.margin-button-10 {
+    margin-top: 10px;
+}
+
+.logo {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.margin-10 {
+    margin: 10px;
+}
+
+.margin-top-110 {
+    margin-top: 110px;
+}
