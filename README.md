@@ -1,7 +1,7 @@
 ### GENETIC ALGORITHM MONKEY THEOREM
 <img src="demo.gif"/>
 
-Project Page Link:  https://nelsondiaas.github.io/genetic-algorithm-monkey-theorem/
+Project Page Link: https://nelsondiaas.github.io/genetic-monkey
 
 > O fato de a vida ter evoluído a partir de quase nada, cerca de 10 bilhões de
  anos após o universo ter evoluído a partir de literalmente nada, é um fato tão
