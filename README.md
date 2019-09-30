@@ -1,4 +1,4 @@
-### <center> GENETIC ALGORITHM MONKEY THEOREM </center>
+# <center> GENETIC ALGORITHM MONKEY THEOREM </center>
 <img src="demo.gif"/>
 
 Project Page Link: https://nelsondiaas.github.io/genetic-monkey
